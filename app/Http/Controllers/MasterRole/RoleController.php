@@ -55,10 +55,10 @@ class RoleController extends Controller
                 return count($p->permissions) . " <a href='" . route($this->route . 'addPermissions', $p->id) . "' class='text-success pull-right' title='Edit Permissions'><i class='icon-clipboard-list2 mr-1'></i></a>";
             })
             ->addColumn('action', function ($p) {
-                // $edit = "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Role'><i class='icon-pencil mr-1'></i></a>";
-                // $delete = " <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='icon-remove'></i></a>";
+                $edit = "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Role'><i class='icon-pencil mr-1'></i></a>";
+                $delete = " <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='icon-remove'></i></a>";
 
-                // return $edit . $delete;
+                return $edit . $delete;
 
                 return '-';
             })
@@ -69,17 +69,17 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|unique:roles,name',
-        //     'guard_name' => 'required'
-        // ]);
+        $request->validate([
+            'name' => 'required|unique:roles,name',
+            'guard_name' => 'required'
+        ]);
 
-        // $input = $request->all();
-        // Role::create($input);
+        $input = $request->all();
+        Role::create($input);
 
-        // return response()->json([
-        //     'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
-        // ]);
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
+        ]);
 
         return response()->json([
             'message' => 'Maaf tidak bisa menambah data'
@@ -93,18 +93,18 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'name' => 'required|unique:roles,name,' . $id,
-        //     'guard_name' => 'required'
-        // ]);
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $id,
+            'guard_name' => 'required'
+        ]);
 
-        // $input = $request->all();
-        // $role  = Role::findOrFail($id);
-        // $role->update($input);
+        $input = $request->all();
+        $role  = Role::findOrFail($id);
+        $role->update($input);
 
-        // return response()->json([
-        //     'message' => 'Data ' . $this->title . ' berhasil diperbaharui.'
-        // ]);
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil diperbaharui.'
+        ]);
 
         return response()->json([
             'message' => 'Maaf tidak bisa memperbaharui data.'

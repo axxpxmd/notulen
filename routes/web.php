@@ -56,4 +56,6 @@ Route::group(['middleware' => ['auth']], function () {
         // Sub Bidang
         Route::resource('sub-bidang', 'SubBidangController');
     });
+
+    Route::get('notulen', 'NotulenController@index')->name('notulen');
 });

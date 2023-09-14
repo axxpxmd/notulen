@@ -84,18 +84,18 @@ class PermissionController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'name' => 'required|unique:permissions,name,' . $id,
-        //     'guard_name' => 'required'
-        // ]);
+        $request->validate([
+            'name' => 'required|unique:permissions,name,' . $id,
+            'guard_name' => 'required'
+        ]);
 
-        // $input = $request->all();
-        // $permission = Permission::findOrFail($id);
-        // $permission->update($input);
+        $input = $request->all();
+        $permission = Permission::findOrFail($id);
+        $permission->update($input);
 
-        // return response()->json([
-        //     'message' => 'Data ' . $this->title . ' berhasil diperbaharui.'
-        // ]);
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil diperbaharui.'
+        ]);
 
         return response()->json([
             'message' => 'Maaf tidak memperbaharui data'

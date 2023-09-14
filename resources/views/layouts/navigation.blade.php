@@ -42,4 +42,11 @@
             <span>OPD</span>
         </a>
     </li>
+    <li class="header light"><strong>MENU</strong></li>
+    <li class="no-b">
+        <a href="{{ route('notulen') }}">
+            <i class="icon icon-clipboard-list text-primary s-18"></i>
+            <span>Notulen</span>
+        </a>
+    </li>
 </ul>
