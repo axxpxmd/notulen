@@ -18,7 +18,7 @@ class User extends Authenticatable
     use HasRoles;
 
     protected $table = 'tmusers';
-    protected $fillable = ['username', 'password'];
+    protected $fillable = ['id', 'id_opd', 'id_bidang', 'id_sub_bidang', 'username', 'password', 'nama'];
     protected $hidden = ['password'];
 
     public function modelHasRole()

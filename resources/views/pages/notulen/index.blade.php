@@ -113,10 +113,10 @@
                                                 <div class="row mb-2">
                                                     <label for="peserta" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Peserta <span class="text-danger">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama Peserta" class="form-control s-12">
+                                                        <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama peserta" class="form-control s-12">
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <i class="icon icon-plus text-primary" id="add-pengajuan"></i>
+                                                        <a href="#"><i class="icon icon-plus text-success" id="add-pengajuan"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,10 +168,10 @@
             <div class="tambahan row mb-2">
                 <label for="peserta" class="col-form-label s-12 col-sm-3 text-right font-weight-bold"></label>
                 <div class="col-sm-8">
-                    <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama Peserta" class="form-control s-12">
+                    <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama peserta" class="form-control s-12">
                 </div>
                 <div class="col-sm-1">
-                    <i class="icon icon-minus text-danger remove-input-field" id="add-pengajuan"></i>
+                    <a href="#"><i class="icon icon-minus text-danger remove-input-field" id="add-pengajuan"></i></a>
                 </div>
             </div>
             `

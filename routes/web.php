@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
         
         // Pengguna
         Route::resource('pengguna', 'PenggunaController');
+        Route::get('get-bidang-by-opd/{id_opd}', 'PenggunaController@getBidangByOpd')->name('getBidangByOpd');
+        Route::get('get-sub-bidang-by-bidang/{id_bidang}', 'PenggunaController@getSubBidangByBidang')->name('getSubBidangByBidang');
     });
 
     //* Config

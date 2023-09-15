@@ -19,13 +19,14 @@ use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-
+use App\Models\Bidang;
 // Model
 use App\User;
 use App\Models\OPD;
 use App\Models\Pengguna;
 use App\Models\ModelHasRoles;
 use App\Models\OPDJenisPendapatan;
+use App\Models\Sub_bidang;
 use Spatie\Permission\Models\Role;
 
 class PenggunaController extends Controller
@@ -50,7 +51,7 @@ class PenggunaController extends Controller
         }
 
         $opds = OPD::select('id', 'nama')->get();
-        $roles = Role::select('id', 'name')->get();
+        $roles = Role::select('id', 'name')->whereNotIn('id', [5])->get();
 
         return view($this->view . 'index', compact(
             'route',
@@ -88,24 +89,69 @@ class PenggunaController extends Controller
             ->toJson();
     }
 
-    public function show($id)
+    public function getBidangByOpd($id_opd)
     {
-        // 
+        return Bidang::where('opd_id', $id_opd)->get();
+    }
+
+    public function getSubBidangByBidang($id_bidang)
+    {
+        return Sub_bidang::where('id_bidang', $id_bidang)->get();
     }
 
     public function store(Request $request)
     {
-        // 
-    }
+        $request->validate([
+            'role_id'  => 'required',
+            'username' => 'required|unique:tmusers,username',
+            'password' => 'required',
+            'nama'     => 'required',
+            'id_opd'   => 'required'
+        ]);
 
-    public function edit($id)
-    {
-        // 
-    }
+        //TODO: Validation for role operator
+        if ($request->role_id == 14) {
+            $request->validate([
+                'id_bidang' => 'required',
+                'id_sub_bidang' => 'required'
+            ]);
+        }
 
-    public function update(Request $request, $id)
-    {
-        //    
+        //* params
+        $role_id  = $request->role_id;
+        $username = $request->username;
+        $password = $request->password;
+        $nama   = $request->nama;
+        $id_opd = $request->id_opd;
+        $id_bidang     = $request->id_bidang;
+        $id_sub_bidang = $request->id_sub_bidang;
+
+        /**
+         * Tahapan
+         * 1. tmusers
+         * 2. model_has_roles
+         */
+
+        //* Tahap 1
+        $user = User::create([
+            'id_opd' => $id_opd,
+            'id_bidang' => $id_bidang,
+            'id_sub_bidang' => $id_sub_bidang,
+            'username' => $username,
+            'password' => Hash::make($password),
+            'nama' => $nama
+        ]);
+
+        //* Tahap 2
+        $model_has_role = new ModelHasRoles();
+        $model_has_role->role_id    = $role_id;
+        $model_has_role->model_type = 'app\User';
+        $model_has_role->model_id   = $user->id;
+        $model_has_role->save();
+
+        return response()->json([
+            'message' => "Data " . $this->title . " berhasil tersimpan."
+        ]);
     }
 
     public function destroy($id)
