@@ -46,8 +46,11 @@ class PenggunaController extends Controller
         $route = $this->route;
         $title = $this->title;
 
+        $opd_id  = $request->opd_id_filter;
+        $role_id = $request->role_id_filter;
+
         if ($request->ajax()) {
-            return $this->dataTable();
+            return $this->dataTable($opd_id, $role_id);
         }
 
         $opds = OPD::select('id', 'nama')->get();
@@ -61,15 +64,13 @@ class PenggunaController extends Controller
         ));
     }
 
-    public function dataTable()
+    public function dataTable($opd_id, $role_id)
     {
-        $data = User::select('id', 'id_opd', 'username', 'nama')->get();
+        $data = user::queryTable($opd_id, $role_id);
 
         return DataTables::of($data)
             ->addColumn('action', function ($p) {
-                return "
-                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus Permission'><i class='icon icon-remove'></i></a>
-                <a href='#' onclick='show(" . $p->id . ")' title='show data'><i class='icon icon-eye3 mr-1'></i></a>";
+                return "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus Permission'><i class='icon icon-remove'></i></a>";
             })
             ->editColumn('nama', function ($p) {
                 return "<a href='" . route($this->route . 'edit', $p->id) . "' class='text-primary' title='Menampilkan Data'>" . $p->nama . "</a>";
@@ -80,6 +81,9 @@ class PenggunaController extends Controller
                 } else {
                     return $p->opd->nama;
                 }
+            })
+            ->addColumn('role', function($p) {
+                return $p->modelHasRole->role->name;
             })
             ->editColumn('username', function ($p) {
                 return $p->username;
@@ -156,6 +160,10 @@ class PenggunaController extends Controller
 
     public function destroy($id)
     {
-        // 
+        User::destroy($id);
+
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil dihapus.'
+        ]);
     }
 }

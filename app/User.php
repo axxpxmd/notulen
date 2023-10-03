@@ -21,6 +21,21 @@ class User extends Authenticatable
     protected $fillable = ['id', 'id_opd', 'id_bidang', 'id_sub_bidang', 'username', 'password', 'nama'];
     protected $hidden = ['password'];
 
+    public static function queryTable($opd_id, $role_id)
+    {
+        $datas = User::select('id', 'id_opd', 'username', 'nama')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'tmusers.id')
+            ->when($opd_id != 0, function ($q) use ($opd_id) {
+                return $q->where('id_opd', $opd_id);
+            })
+            ->when($role_id != 0, function ($q) use ($role_id) {
+                return $q->where('model_has_roles.role_id', $role_id);
+            })
+            ->whereNotIn('id', [1]);
+
+        return $datas->orderBy('id', 'DESC')->get();
+    }
+
     public function modelHasRole()
     {
         return $this->belongsTo(ModelHasRoles::class, 'id', 'model_id');

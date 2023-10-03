@@ -104,9 +104,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row mb-2">
-                                                <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen</label>
+                                                <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen <span class="text-danger">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12"/>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label for="foto_rapat" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Foto Rapat</label>
+                                                <div class="col-sm-9">
+                                                    <input type="file" name="foto_rapat" id="foto_rapat" multiple class="form-control s-12"/>
                                                 </div>
                                             </div>
                                             <div id="peserta">

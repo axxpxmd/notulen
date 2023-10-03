@@ -27,16 +27,51 @@
     <div class="container-fluid relative animatedParent animateOnce">
         <div class="tab-content my-3" id="pills-tabContent">
             <div class="tab-pane animated fadeInUpShort show active" id="semua-data" role="tabpanel">
+                <div class="card no-b mb-2">
+                    <div class="card-body">
+                        <div class="col-md-8 container">
+                            <div class="row mb-2">
+                                <label for="opd" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">OPD</label>
+                                <div class="col-sm-8">
+                                    <select id="opd_id_filter" class="select2 form-control r-0 s-12">
+                                        <option value="0">Semua</option>
+                                        @foreach ($opds as $i)
+                                            <option value="{{ $i->id }}">{{ $i->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label for="opd" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Role</label>
+                                <div class="col-sm-8">
+                                    <select id="role_id_filter" class="select2 form-control r-0 s-12">
+                                        <option value="0">Semua</option>
+                                        @foreach ($roles as $i)
+                                            <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <button class="btn btn-success btn-sm" onclick="pressOnChange()"><i class="icon-filter mr-2"></i>Filter</button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card no-b">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+                                    <table id="dataTable" class="table display nowrap table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="5%">No</th>
                                             <th width="20%">Nama</th>
-                                            <th width="60%">OPD</th>
+                                            <th width="50%">OPD</th>
+                                            <th width="10%">Role</th>
                                             <th width="10%">Nama Login</th>
                                             <th width="5%"></th>
                                         </thead>
@@ -91,7 +126,7 @@
                                         <div class="row mb-2">
                                             <label class="col-form-label s-12 col-sm-3 text-right font-weight-bold">OPD / Instansi <span class="text-danger ml-1">*</span></label>
                                             <div class="col-md-9">
-                                                <select class="select2 form-control r-0 s-12" id="id_opd" name="id_opd" autocomplete="off" required>
+                                                <select class="select2 form-control r-0 s-12" id="id_opd" name="id_opd" autocomplete="off">
                                                     <option value="">Pilih</option>
                                                     @foreach ($opds as $i)
                                                         <option value="{{ $i->id }}">{{ $i->nama }}</option>
@@ -145,17 +180,23 @@
             url: "{{ route('master-role.pengguna.index') }}",
             method: 'GET',
             data: function (data) {
-                // 
+                data.opd_id_filter  = $('#opd_id_filter').val();
+                data.role_id_filter = $('#role_id_filter').val();
             }
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'nama', name: 'nama'},
-            {data: 'opd', name: 'opd', orderable: false, searchable: false},
-            {data: 'username', name: 'role',  orderable: false, searchable: false},
+            {data: 'opd', name: 'opd'},
+            {data: 'role', name: 'role'},
+            {data: 'username', name: 'username'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
+
+    function pressOnChange(){
+        table.api().ajax.reload();
+    }
 
     $('#id_opd').on('change', function(){
         val = $(this).val();
@@ -207,7 +248,7 @@
     $(function() {
         $('#role_id').change(function(){
             var role_id = $('#role_id').val();
-            if(role_id == 13) {
+            if(role_id == 15) {
                 $('#bidang_display').hide(); 
                 $('#sub_bidang_display').hide(); 
             } else {
@@ -221,7 +262,6 @@
         save_method = "add";
         $('#form').trigger('reset');
         $('input[name=_method]').val('POST');
-        $('#reset').show();
         $('#id_opd').val(0);
         $('#id_opd').trigger('change.select2');
         $('#id_bidang').val(0);
@@ -266,5 +306,49 @@
         }
         $(this).addClass('was-validated');
     });
+
+    function remove(id){
+        $.confirm({
+            title: '',
+            content: 'Apakah Anda yakin akan menghapus data ini ?',
+            icon: 'icon icon-question amber-text',
+            theme: 'modern',
+            closeIcon: true,
+            animation: 'scale',
+            type: 'red',
+            buttons: {
+                ok: {
+                    text: "ok!",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.post("{{ route($route.'destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'}, function(data) {
+                            table.api().ajax.reload();
+                            $.confirm({
+                                title: 'Success',
+                                content: data.message,
+                                icon: 'icon icon-check',
+                                theme: 'modern',
+                                closeIcon: true,
+                                animation: 'scale',
+                                autoClose: 'ok|3000',
+                                type: 'green',
+                                buttons: {
+                                    ok: {
+                                        text: "ok!",
+                                        btnClass: 'btn-primary',
+                                        keys: ['enter']
+                                    }
+                                }
+                            });
+                        }, "JSON").fail(function(){
+                            reload();
+                        });
+                    }
+                },
+                cancel: function(){}
+            }
+        });
+    }
 </script>
 @endsection
