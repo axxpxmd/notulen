@@ -15,7 +15,7 @@
             <div class="row justify-content-between">
                 <ul role="tablist" class="nav nav-material nav-material-white responsive-tab">
                     <li class="nav-item">
-                        <a class="nav-link active show" id="tab1" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-home2"></i>Semua Data</a>
+                        <a class="nav-link active show" id="tab1" onclick="pressOnChange()" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-home2"></i>Semua Data</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="tab2" data-toggle="tab" href="#tambah-data" role="tab"><i class="icon icon-plus"></i>Tambah Data</a>
@@ -258,10 +258,8 @@
         });
     });
 
-    function add(){
-        save_method = "add";
+    function reset(){
         $('#form').trigger('reset');
-        $('input[name=_method]').val('POST');
         $('#id_opd').val(0);
         $('#id_opd').trigger('change.select2');
         $('#id_bidang').val(0);
@@ -287,9 +285,9 @@
                 contentType: false,
                 processData: false,
                 success : function(data) {
-                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+                    reset();  
+                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");  
                     table.api().ajax.reload();
-                    add();    
                 },
                 error : function(data){
                     err = '';
