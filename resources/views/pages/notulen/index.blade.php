@@ -63,6 +63,7 @@
                                         <option value="">Semua</option>
                                         <option value="0">Belum Ditinjau</option>
                                         <option value="1">Sudah Ditinjau</option>
+                                        <option value="2">Ditolak</option>
                                     </select>
                                 </div>
                             </div>

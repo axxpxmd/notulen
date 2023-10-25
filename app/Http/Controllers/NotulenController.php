@@ -20,7 +20,6 @@ use App\Models\FotoRapat;
 class NotulenController extends Controller
 {
     protected $route = 'notulen.';
-    protected $view  = 'pages.notulen.index.';
     protected $title = 'Notulen';
 
     public function index(Request $request)
@@ -72,9 +71,11 @@ class NotulenController extends Controller
             })
             ->editColumn('status', function ($p) {
                 if ($p->status == 0) {
-                    return "<span class='badge badge-danger'>Belum Ditinjau</span>";
-                } else {
+                    return "<span class='badge badge-warning'>Belum Ditinjau</span>";
+                } elseif ($p->status == 1) {
                     return "<span class='badge badge-success'>Sudah Ditinjau</span>";
+                } else {
+                    return "<span class='badge badge-danger'>Ditolak</span>";
                 }
             })
             ->editColumn('tempat', function ($p) {
@@ -189,8 +190,29 @@ class NotulenController extends Controller
         ]);
     }
 
-    public function show()
+    public function show($id)
     {
-        // 
+        $route = $this->route;
+        $title = $this->title;
+
+        $role  = Auth::user()->modelHasRole->role->name;
+
+        $data = Notulen::find($id);
+        $pesertas = Peserta::where('id_notulen', $id)->get();
+        $foto_rapats = FotoRapat::where('id_notulen', $id)->get();
+
+        return view('pages.notulen.show', compact(
+            'route',
+            'title',
+            'data',
+            'pesertas',
+            'foto_rapats',
+            'role'
+        ));
+    }
+
+    public function updateStatus(Request $request)
+    {
+        dd($request->all());
     }
 }

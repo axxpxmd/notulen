@@ -62,4 +62,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('notulen', 'NotulenController@index')->name('notulen');
     Route::post('notulen/store', 'NotulenController@store')->name('notulen.store');
     Route::get('notulen/{id}', 'NotulenController@show')->name('notulen.show');
+    Route::post('notulen/update-status/{id}', 'NotulenController@updateStatus')->name('notulen.updateStatus');
 });

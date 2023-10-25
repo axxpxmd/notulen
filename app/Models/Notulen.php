@@ -26,6 +26,21 @@ class Notulen extends Model
         return $data->orderBy('id', 'DESC');
     }
 
+    public function opd()
+    {
+        return $this->belongsTo(OPD::class, 'id_opd');
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'id_bidang');
+    }
+
+    public function subBidang()
+    {
+        return $this->belongsTo(Sub_bidang::class, 'id_sub_bidang');
+    }
+
     public function peserta()
     {
         return $this->hasMany(Peserta::class, 'id_notulen', 'id');
