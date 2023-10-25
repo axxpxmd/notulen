@@ -15,11 +15,13 @@
             <div class="row justify-content-between">
                 <ul role="tablist" class="nav nav-material nav-material-white responsive-tab">
                     <li class="nav-item">
-                        <a class="nav-link active show" id="tab1" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-home2"></i>Semua Data</a>
+                        <a class="nav-link active show" id="tab1" onclick="pressOnChange()" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-home2"></i>Semua Data</a>
                     </li>
+                    @if ($role == 'operator')
                     <li class="nav-item">
                         <a class="nav-link" id="tab2" data-toggle="tab" href="#tambah-data" role="tab"><i class="icon icon-plus"></i>Tambah Data</a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -27,6 +29,52 @@
     <div class="container-fluid relative animatedParent animateOnce">
         <div class="tab-content my-3" id="pills-tabContent">
             <div class="tab-pane animated fadeInUpShort show active" id="semua-data" role="tabpanel">
+                <div class="card no-b mb-2">
+                    <div class="card-body">
+                        <div class="col-md-8 container">
+                            <div class="row mb-2">
+                                <label for="id_opd_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">OPD</label>
+                                <div class="col-sm-8">
+                                    <select id="id_opd_filter" class="select2 form-control r-0 s-12">
+                                        <option value="">Semua</option>
+                                        @foreach ($opds as $i)
+                                            <option value="{{ $i->id }}" {{ $id_opd == $i->id ? 'selected' : '' }}>{{ $i->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Tanggal Agenda</label>
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="date" placeholder="MM/DD/YYYY" value="{{ $today }}" name="tanggal_mulai" id="tanggal_mulai" class="form-control r-0 light s-12 mb-5-m" autocomplete="off"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="date" placeholder="MM/DD/YYYY" value="{{ $today }}" name="tanggal_akhir" id="tanggal_akhir" class="form-control r-0 light s-12" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row mb-2">
+                                <label for="status_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Status</label>
+                                <div class="col-sm-8">
+                                    <select id="status_filter" class="select2 form-control r-0 s-12">
+                                        <option value="">Semua</option>
+                                        <option value="0">Belum Ditinjau</option>
+                                        <option value="1">Sudah Ditinjau</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <button class="btn btn-success btn-sm" onclick="pressOnChange()"><i class="icon-filter mr-2"></i>Filter</button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card no-b">
@@ -37,6 +85,10 @@
                                             <th>No</th>
                                             <th>Judul Agenda</th>
                                             <th>Tanggal</th>
+                                            <th>Tempat</th>
+                                            <th>Jumlah Peserta</th>
+                                            <th>File Notulen</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </thead>
                                         <tbody></tbody>
@@ -110,7 +162,7 @@
                                             <div class="row mb-2">
                                                 <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen <span class="text-danger">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12"/>
+                                                    <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12" required/>
                                                     <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
                                                 </div>
                                             </div>
@@ -149,7 +201,7 @@
         </div>
     </div>
 </div>
-@include('pages.masterRole.pengguna.show')
+@include('layouts.loading')
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -163,13 +215,20 @@
             url: "{{ route('notulen') }}",
             method: 'GET',
             data: function (data) {
-                // 
+                data.id_opd_filter = $('#id_opd_filter').val();
+                data.tanggal_mulai = $('#tanggal_mulai').val();
+                data.tanggal_akhir = $('#tanggal_akhir').val();
+                data.status_filter = $('#status_filter').val();
             }
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'judul_agenda', name: 'judul_agenda'},
-            {data: 'tanggal', name: 'tanggal'},
+            {data: 'tanggal_agenda', name: 'tanggal_agenda'},
+            {data: 'tempat', name: 'tempat'},
+            {data: 'jumlah_peserta', name: 'jumlah_peserta', className: 'text-center'},
+            {data: 'file_notulen', name: 'file_notulen', className: 'text-center'},
+            {data: 'status', name: 'status', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
@@ -198,6 +257,10 @@
         );
     });
 
+    function pressOnChange(){
+        table.api().ajax.reload();
+    }
+
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('.tambahan').remove();
     });
@@ -213,6 +276,8 @@
         }
         else{
             $('#alert').html('');
+            $('#action').attr('disabled', true);
+            $('#loading').modal('show');
             url = "{{ route($route.'store') }}",
             $.ajax({
                 url : url,
@@ -221,10 +286,29 @@
                 contentType: false,
                 processData: false,
                 success : function(data) { 
-                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");  
-                    table.api().ajax.reload();
+                    $('#loading').modal('toggle');
+                    $.confirm({
+                        title: 'Success',
+                        content: data.message,
+                        icon: 'icon icon-check', 
+                        theme: 'modern',
+                        animation: 'scale',
+                        autoClose: 'ok|3000',
+                        type: 'green',
+                        buttons: {
+                            ok: {
+                                text: "ok!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+                                action: function () {
+                                    window.location.href = "{{ route('notulen')}}";
+                                }
+                            }
+                        }
+                    });
                 },
                 error : function(data){
+                    $('#loading').modal('toggle');
                     err = '';
                     respon = data.responseJSON;
                     if(respon.errors){
@@ -233,6 +317,7 @@
                         });
                     }
                     $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                    $('#action').removeAttr('disabled');
                 }
             });
             return false;

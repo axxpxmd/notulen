@@ -28,6 +28,10 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    // SFTP
+    'sftp_root' => env('SFTP_ROOT'),
+    'sftp_src' => env('SFTP_SRC'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -120,49 +124,6 @@ return [
 
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
-
-    // SFTP
-    'sftp_root' => env('SFTP_ROOT'),
-    'sftp_src' => env('SFTP_SRC'),
-
-    // TTE
-    'signapi' => env('SIGNAPI'),
-    'signapi_ipserver' => env('SIGNAPI_IPSERVER'),
-    'signapi_bearer' => env('SIGNAPI_BEARER'),
-
-    // AUROGRAF
-    'aurografapi' => env('AUROGRAFAPI'),
-    'aurografapi_server' => env('AUROGRAFAPI_IPSERVER'),
-    'aurograf_bearer' => env('AUROGRAFAPI_BEARER'),
-
-    // BSRE
-    'bsre_ip' => env('BSRE_IP'),
-
-    // Virtual Account BJB
-    'cin_bjb' => env('CIN_BJB'),
-    'ip_api_bjb' => env('IP_API_BJB'),
-    'key_bjb' => env('KEY_BJB'),
-    'client_id_bjb' => env('CLIENT_ID_BJB'),
-
-    // QRIS BJB
-    'msisdn_bjb' => env('MSISDN_BJB'),
-    'password_bjb' => env('PASSWORD_BJB'),
-    'ip_qris' => env('IP_QRIS'),
-    'app_id_qris' => env('APP_ID_QRIS'),
-
-    // Email
-    'name' => env('APP_NAME'),
-    'mail_from' => env('MAIL_USERNAME'),
-    'mail_name' => env('MAIL_NAME'),
-
-    'tte_backup' => env('TTE_BACKUP'),
-
-    // Whatsapp
-    'wagateway_ipserver' => env('WAGATEWAY_IPSERVER'),
-    'wagateway_apikey_login' => env('WAGATEWAY_APIKEY_LOGIN'),
-    'wagateway_apikey' => env('WAGATEWAY_APIKEY'),
-
-    'url_retribusi' => env('URL_RETRIBUSI'),
 
     /*
     |--------------------------------------------------------------------------
