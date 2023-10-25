@@ -61,13 +61,14 @@
                                             <div class="row mb-2">
                                                 <label for="acuan" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Dasar Acuan <span class="text-danger ml-1">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="acuan" id="acuan"  class="form-control s-12" autocomplete="off" placeholder="No Surat / Undangan" required/>
+                                                    <textarea type="text" name="acuan" id="acuan" rows="3" class="form-control s-12" autocomplete="off" placeholder="No Surat / Undangan" required></textarea>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
                                                 <label for="file_acuan" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">File Acuan</label>
                                                 <div class="col-sm-9">
                                                     <input type="file" name="file_acuan" id="file_acuan" class="form-control s-12"/>
+                                                    <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
                                                 </div>
                                             </div>
                                             <hr>
@@ -79,14 +80,17 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <label for="tanggal_agenda" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Tanggal <span class="text-danger ml-1">*</span></label>
-                                                <div class="col-sm-9">
-                                                    <input type="date" name="tanggal_agenda" id="tanggal_agenda"  class="form-control s-12" autocomplete="off" required/>
+                                                <div class="col-sm-4">
+                                                    <input type="date" name="tanggal_agenda" id="tanggal_agenda" onchange="getDayName()" class="form-control s-12" autocomplete="off" required/>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="text" readonly id="dayName" class="form-control s-12" autocomplete="off" required/>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
-                                                <label for="waktu" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Waktu</label>
+                                                <label for="waktu" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Waktu <span class="text-danger ml-1">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="time" name="waktu" id="waktu"  class="form-control s-12" autocomplete="off"/>
+                                                    <input type="time" name="waktu" id="waktu"  class="form-control s-12" autocomplete="off" required/>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -107,12 +111,14 @@
                                                 <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen <span class="text-danger">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12"/>
+                                                    <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
                                                 <label for="foto_rapat" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Foto Rapat</label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" name="foto_rapat" id="foto_rapat" multiple class="form-control s-12"/>
+                                                    <input type="file" name="foto_rapat[]" id="foto_rapat" multiple class="form-control s-12"/>
+                                                    <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
                                                 </div>
                                             </div>
                                             <div id="peserta">
@@ -168,6 +174,14 @@
         ]
     });
 
+    function getDayName(){
+        date = $('#tanggal_agenda').val();
+        const d = new Date(date);
+        const weekday = ["Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu"];
+
+        $('#dayName').val(weekday[d.getDay()])
+    }
+
     $("#add-pengajuan").click(function () {
         $("#peserta").append(
             `
@@ -186,6 +200,44 @@
 
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('.tambahan').remove();
+    });
+
+    function reset(){
+        $('#form').trigger('reset');
+    }
+
+    $('#form').on('submit', function (e) {
+        if ($(this)[0].checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else{
+            $('#alert').html('');
+            url = "{{ route($route.'store') }}",
+            $.ajax({
+                url : url,
+                type : 'POST',
+                data: new FormData(($(this)[0])),
+                contentType: false,
+                processData: false,
+                success : function(data) { 
+                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");  
+                    table.api().ajax.reload();
+                },
+                error : function(data){
+                    err = '';
+                    respon = data.responseJSON;
+                    if(respon.errors){
+                        $.each(respon.errors, function( index, value ) {
+                            err = err + "<li>" + value +"</li>";
+                        });
+                    }
+                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                }
+            });
+            return false;
+        }
+        $(this).addClass('was-validated');
     });
 </script>
 @endsection

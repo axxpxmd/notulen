@@ -44,4 +44,68 @@ class NotulenController extends Controller
             ->rawColumns(['action'])
             ->toJson();
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'acuan' => 'required',
+            'judul_agenda' => 'required',
+            'tanggal_agenda' => 'required',
+            'waktu' => 'required',
+            'tempat' => 'required',
+            'file_notulen' => 'required'
+        ]);
+
+        //* Get Params
+        $acuan = $request->acuan;
+        $judul_agenda = $request->judul_agenda;
+        $tanggal_agenda = $request->tanggal_agenda;
+        $waktu = $request->waktu;
+        $tempat = $request->tempat;
+        $keterangan = $request->keterangan;
+
+        $file_acuan = $request->file('file_acuan');
+        $file_notulen = $request->file('file_notulen');
+        $foto_rapat = $request->file('foto_rapat');
+
+        if ($file_acuan) {
+            $ext = $request->file('file_acuan')->extension();
+            if (!in_array($ext, ['pdf', 'png', 'jpeg', 'jpg']))
+                return response()->json([
+                    'message' => 'Format file tidak diperbolehkan'
+                ], 500);
+
+            //TODO: Saved to storage
+            $fileName = time() . "-" . mt_rand(0, 999) . "." . $ext;
+            $file_acuan->storeAs('file-acuan/', $fileName, 'sftp', 'public');
+        }
+
+        if ($file_notulen) {
+            $ext = $request->file('file_notulen')->extension();
+            if (!in_array($ext, ['pdf', 'png', 'jpeg', 'jpg']))
+                return response()->json([
+                    'message' => 'Format file tidak diperbolehkan'
+                ], 500);
+
+            //TODO: Saved to storage
+            $fileName = time() . "-" . mt_rand(0, 999) . "." . $ext;
+            $file_notulen->storeAs('file-notulen/', $fileName, 'sftp', 'public');
+        }
+
+        if ($foto_rapat) {
+            foreach ($foto_rapat as $key => $i) {
+                $ext = $foto_rapat[$key]->extension();
+                if (!in_array($ext, ['pdf', 'png', 'jpeg', 'jpg']))
+                    return response()->json([
+                        'message' => 'Format file tidak diperbolehkan'
+                    ], 500);
+
+                //TODO: Saved to storage 
+                $fileName = time() . "-" . mt_rand(0, 999) . "." . $ext;
+                $foto_rapat[$key]->storeAs('foto-rapat/', $fileName, 'sftp', 'public');
+            }
+        }
+
+        dd('berhasil');
+    }
 }
