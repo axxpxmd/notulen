@@ -145,7 +145,7 @@ class NotulenController extends Controller
                         'message' => 'Format file tidak diperbolehkan'
                     ], 500);
 
-                //TODO: Saved to storage 
+                //TODO: Saved to storage
                 $fileName = time() . "-" . mt_rand(0, 999) . "." . $ext;
                 $foto_rapat[$key]->storeAs('foto-rapat/', $fileName, 'sftp', 'public');
 
