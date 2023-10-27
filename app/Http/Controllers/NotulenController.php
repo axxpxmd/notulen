@@ -213,6 +213,22 @@ class NotulenController extends Controller
 
     public function updateStatus(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'status' => 'required'
+        ]);
+
+        $id = $request->id;
+        $status = $request->status;
+        $pesan  = $request->pesan;
+
+        $data = Notulen::find($id);
+        $data->update([
+            'status' => $status,
+            'pesan'  => $pesan
+        ]);
+
+        return redirect()
+            ->route('notulen.show', $id)
+            ->withSuccess('Selamat! Status notulen berhasil diperbarui.');
     }
 }

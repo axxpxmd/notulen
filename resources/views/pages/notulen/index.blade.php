@@ -71,7 +71,7 @@
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
                                     <button class="btn btn-success btn-sm" onclick="pressOnChange()"><i class="icon-filter mr-2"></i>Filter</button>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,14 +83,14 @@
                                 <div class="table-responsive">
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
-                                            <th>No</th>
-                                            <th>Judul Agenda</th>
-                                            <th>Tanggal</th>
-                                            <th>Tempat</th>
-                                            <th>Jumlah Peserta</th>
-                                            <th>File Notulen</th>
-                                            <th>Status</th>
-                                            <th></th>
+                                            <th width="5%">No</th>
+                                            <th width="30%">Judul Agenda</th>
+                                            <th width="20%">Tempat</th>
+                                            <th width="10%">Tanggal</th>
+                                            <th width="10%">Jumlah Peserta</th>
+                                            <th width="10%">File Notulen</th>
+                                            <th width="10%">Status</th>
+                                            <th width="5%"></th>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
@@ -225,8 +225,8 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'judul_agenda', name: 'judul_agenda'},
-            {data: 'tanggal_agenda', name: 'tanggal_agenda'},
             {data: 'tempat', name: 'tempat'},
+            {data: 'tanggal_agenda', name: 'tanggal_agenda', className: 'text-center'},
             {data: 'jumlah_peserta', name: 'jumlah_peserta', className: 'text-center'},
             {data: 'file_notulen', name: 'file_notulen', className: 'text-center'},
             {data: 'status', name: 'status', className: 'text-center'},
@@ -286,12 +286,12 @@
                 data: new FormData(($(this)[0])),
                 contentType: false,
                 processData: false,
-                success : function(data) { 
+                success : function(data) {
                     $('#loading').modal('toggle');
                     $.confirm({
                         title: 'Success',
                         content: data.message,
-                        icon: 'icon icon-check', 
+                        icon: 'icon icon-check',
                         theme: 'modern',
                         animation: 'scale',
                         autoClose: 'ok|3000',

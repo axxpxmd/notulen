@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <label class="col-md-2 text-right s-12 font-weight-bold">File Acuan :</label>
                                         <label class="col-md-8 s-12">
-                                            <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-acuan"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button> 
+                                            <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-acuan"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button>
                                         </label>
                                     </div>
                                     <hr>
@@ -98,7 +98,7 @@
                                             <div class="row">
                                                 <label class="col-md-4 text-right s-12 font-weight-bold">File Notulen :</label>
                                                 <label class="col-md-8 s-12">
-                                                    <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-notulen"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button> 
+                                                    <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-notulen"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button>
                                                 </label>
                                             </div>
                                         </div>
@@ -132,6 +132,7 @@
                             <div class="card-body">
                                 <form class="needs-validation" action="{{ route('notulen.updateStatus', $data->id) }}" method="POST" novalidate>
                                     @csrf
+                                    @include('layouts.alerts')
                                     <div class="row mb-2">
                                         <label class="col-form-label s-12 col-sm-2 text-right">Status<span class="text-danger ml-1">*</span></label>
                                         <div class="col-md-4">
@@ -151,7 +152,7 @@
                                     <div class="row mb-2">
                                         <label class="col-sm-2"></label>
                                         <div class="col-md-4">
-                                            <button type="submit" class="btn btn-success btn-sm"><i class="icon-save mr-2"></i>Simpan Data</button>
+                                            <button type="submit" class="btn btn-success btn-sm"><i class="icon-save mr-2"></i>Perbarui Status</button>
                                         </div>
                                     </div>
                                 </form>
@@ -182,6 +183,7 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    // 
+    $('#status').val("{{ $data->status }}");
+    $('#status').trigger('change.select2');
 </script>
 @endsection
