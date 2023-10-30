@@ -114,13 +114,6 @@ class NotulenController extends Controller
         $file_notulen = $request->file('file_notulen');
         $foto_rapat = $request->file('foto_rapat');
 
-        $pdf = new Pdf($file_acuan);
-        foreach (range(1, $pdf->getNumberOfPages()) as $pageNumber) {
-            $pdf->setPage($pageNumber)
-                ->saveImage('page' . $pageNumber . 'jpg');
-        }
-        dd('test');
-
         if ($file_acuan) {
             $ext = $request->file('file_acuan')->extension();
             if (!in_array($ext, ['pdf', 'png', 'jpeg', 'jpg']))
