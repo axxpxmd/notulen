@@ -36,11 +36,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('{id}/getPermissions', 'RoleController@getPermissions')->name('getPermissions');
             Route::delete('{name}/destroyPermission', 'RoleController@destroyPermission')->name('destroyPermission');
         });
-        
+
         // Permission
         Route::resource('permission', 'PermissionController');
         Route::post('permission/api', 'PermissionController@api')->name('permission.api');
-        
+
         // Pengguna
         Route::resource('pengguna', 'PenggunaController');
         Route::get('get-bidang-by-opd/{id_opd}', 'PenggunaController@getBidangByOpd')->name('getBidangByOpd');

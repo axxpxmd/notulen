@@ -7,8 +7,8 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Title --> 
-    <link rel="icon" href="{{ asset('images/logo-png.png') }}" type="image/x-icon">
+    <!-- Title -->
+    <link rel="icon" href="{{ asset('images/template/logo_title.png') }}" type="image/x-icon">
     <title>{{ config('app.name') }} @yield('title')</title>
 
     <!-- CSS -->
@@ -24,7 +24,7 @@
 
     <!-- Animate CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-   
+
     <!-- Font -->
     <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
 </head>
@@ -38,7 +38,7 @@
             </div>
             <div class="relative">
                 <a data-toggle="collapse" href="#userSettingsCollapse" role="button" class="btn-fab btn-fab-sm absolute fab-right-bottom fab-top btn-primary shadow1 ">
-                    <i class="icon icon-cogs"></i> 
+                    <i class="icon icon-cogs"></i>
                 </a>
                 <div class="user-panel p-3 light mb-2">
                     <div class="float-left image pl-1">

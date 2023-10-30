@@ -7,7 +7,7 @@
     <meta name="author" content="">
 
     <!-- Title -->
-    <link rel="icon" href="{{ asset('images/logo-png.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('images/template/logo_title.png') }}" type="image/x-icon">
     <title>{{ config('app.name') }} | Form Login</title>
 
     <!-- CSS -->
@@ -24,8 +24,8 @@
             <div class="col-md-9 height-full css-selector m-none d-flex align-content-center flex-wrap">
                 <div class="col-md-6">
                     <div class="text-white p-l-80">
-                        <p id="title" class="fs-50 font-weight-light animate__animated animate__backInLeft">NOTULEN RAPAT</p>
-                        <p class="mt-4 mb-1 fs-25 font-weight-lighter">Sistem  Manajemen Notulensi Rapat.</p>
+                        <p id="title" class="fs-50 font-weight-light animate__animated animate__backInLeft">SIDIMAS</p>
+                        <p class="mt-4 mb-1 fs-25 font-weight-lighter">Sistem Disposisi Surat Masuk.</p>
                         <p class="mt-0 fs-25 font-weight-lighter">Kota Tangerang Selatan.</p>
                         <hr class="mt-2 bg-white" width="200%">
                     </div>
@@ -48,7 +48,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    @endif 
+                    @endif
                     <h3 class="font-weight-normal">Selamat Datang</h3>
                     <p>Silahkan masukan username dan password Anda.</p>
                     <form class="needs-validation" novalidate method="POST" action="{{ route('login') }}" autocomplete="off">
