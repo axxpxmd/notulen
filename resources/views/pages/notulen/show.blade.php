@@ -122,6 +122,13 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="container col-md-6 mt-4">
+                                            <div class="row justify-content-center">
+                                                <div class="col-auto p-1">
+                                                    <a href="{{ route('notulen.generateNotulen', $data->id) }}" target="blank" class="btn btn-sm btn-primary mr-1"><i class="icon-document-file-pdf2 mr-2"></i>File Notulen</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

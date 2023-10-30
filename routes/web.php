@@ -64,4 +64,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('notulen/{id}', 'NotulenController@show')->name('notulen.show');
     Route::post('notulen/update-status/{id}', 'NotulenController@updateStatus')->name('notulen.updateStatus');
     Route::delete('notulen/{id}', 'NotulenController@destroy')->name('notulen.destroy');
+    Route::get('notulen/generate-notulen/{id}', 'NotulenController@generateNotulen')->name('notulen.generateNotulen');
 });

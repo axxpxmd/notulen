@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DataTables;
 use Carbon\Carbon;
+use Spatie\PdfToImage\Pdf;
 use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Http\Controllers\Controller;
@@ -112,6 +113,13 @@ class NotulenController extends Controller
         $file_acuan = $request->file('file_acuan');
         $file_notulen = $request->file('file_notulen');
         $foto_rapat = $request->file('foto_rapat');
+
+        $pdf = new Pdf($file_acuan);
+        foreach (range(1, $pdf->getNumberOfPages()) as $pageNumber) {
+            $pdf->setPage($pageNumber)
+                ->saveImage('page' . $pageNumber . 'jpg');
+        }
+        dd('test');
 
         if ($file_acuan) {
             $ext = $request->file('file_acuan')->extension();
@@ -244,5 +252,23 @@ class NotulenController extends Controller
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil dibatalkan.'
         ]);
+    }
+
+    public function generateNotulen($id)
+    {
+        $notulen = Notulen::find($id);
+        $foto_rapats = FotoRapat::where('id_notulen', $id)->get();
+        $pesertas = Peserta::where('id_notulen', $id)->get();
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option("enable_php", true);
+        $pdf->setPaper('legal', 'portrait');
+        $pdf->loadView('pages.notulen.notulen', compact(
+            'notulen',
+            'foto_rapats',
+            'pesertas'
+        ));
+
+        return $pdf->stream("test.pdf");
     }
 }
