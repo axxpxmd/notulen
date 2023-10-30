@@ -231,4 +231,18 @@ class NotulenController extends Controller
             ->route('notulen.show', $id)
             ->withSuccess('Selamat! Status notulen berhasil diperbarui.');
     }
+
+    public function destroy($id)
+    {
+        $notulen = Notulen::where('id', $id)->first();
+
+        FotoRapat::where('id_notulen', $id)->delete();
+        Peserta::where('id_notulen', $id)->delete();
+
+        $notulen->delete();
+
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil dibatalkan.'
+        ]);
+    }
 }
