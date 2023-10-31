@@ -58,7 +58,7 @@ class NotulenController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($p) {
-                return "<a href='#' onclick='edit(" . $p->id . ")' class='text-success mr-2' title='Edit Data'><i class='icon icon-edit'></i></a>
+                return "<a href='" . route('notulen.edit', $p->id) . "' class='text-success mr-2' title='Edit Data'><i class='icon icon-edit'></i></a>
                 <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='icon-remove'></i></a>";
             })
             ->editColumn('judul_agenda', function ($p) {
@@ -263,5 +263,26 @@ class NotulenController extends Controller
         ));
 
         return $pdf->stream("test.pdf");
+    }
+
+    public function edit($id)
+    {
+        $route = $this->route;
+        $title = $this->title;
+
+        $role  = Auth::user()->modelHasRole->role->name;
+
+        $data = Notulen::find($id);
+        $pesertas = Peserta::where('id_notulen', $id)->get();
+        $foto_rapats = FotoRapat::where('id_notulen', $id)->get();
+
+        return view('pages.notulen.edit', compact(
+            'route',
+            'title',
+            'data',
+            'pesertas',
+            'foto_rapats',
+            'role'
+        ));
     }
 }

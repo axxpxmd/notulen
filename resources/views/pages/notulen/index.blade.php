@@ -152,7 +152,7 @@
                                                     <input type="text" name="tempat" id="tempat"  class="form-control s-12" autocomplete="off" placeholder="Tempat Rapat" required/>
                                                 </div>
                                             </div>
-                                              <div class="row mb-2">
+                                            <div class="row mb-2">
                                                 <label for="keterangan" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Keterangan</label>
                                                 <div class="col-sm-9">
                                                     <textarea name="keterangan" id="keterangan"  class="form-control s-12" rows="4"></textarea>
