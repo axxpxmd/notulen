@@ -22,7 +22,6 @@ use App\Http\Controllers\Controller;
 
 // Model
 use App\User;
-use App\Models\Pengguna;
 
 class ProfileController extends Controller
 {
@@ -36,7 +35,7 @@ class ProfileController extends Controller
         $title = $this->title;
 
         $user_id = Auth::user()->id;
-        $data    = Pengguna::where('user_id', $user_id)->first();
+        $data    = User::find($user_id);
 
         return view($this->view . 'index', compact(
             'route',
@@ -47,7 +46,7 @@ class ProfileController extends Controller
 
     public function update()
     {
-        // 
+        //
     }
 
     public function editPassword($id)
