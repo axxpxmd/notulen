@@ -29,6 +29,7 @@
             <div class="tab-pane animated fadeInUpShort show active" id="semua-data" role="tabpanel">
                 <div class="row">
                     <div class="col-md-12">
+                        @include('layouts.alerts')
                         <div class="card mt-2">
                             <h6 class="card-header font-weight-bold">Data Notulen</h6>
                             <div class="card-body">
@@ -85,6 +86,28 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <div class="row mb-2">
+                                                <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen <span class="text-danger">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12" required/>
+                                                    <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label for="foto_rapat" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Foto Rapat</label>
+                                                <div class="col-sm-9">
+                                                    <input type="file" name="foto_rapat[]" id="foto_rapat" multiple class="form-control s-12"/>
+                                                    <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
+                                                    @foreach ($foto_rapats as $fr)
+                                                    <div class="s-12 my-3">
+                                                        <li class="mb-2">
+                                                            <a target="blank" href="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}">{{ $fr->foto }}</a>
+                                                            <a href="{{ route('notulen.hapusFoto', $fr->id) }}" onclick="return confirm('Apakah anda yakin ?')"><i title="Hapus Foto" class="icon-times ml-2 text-danger"></i></a>
+                                                        </li>
+                                                    </div>
+                                                @endforeach
+                                                </div>
+                                            </div>
                                             <div id="peserta">
                                                 @foreach ($pesertas as $key => $p)
                                                 <div class="row {{ $key != 0 ? 'tambahan' : '-' }} mb-2">

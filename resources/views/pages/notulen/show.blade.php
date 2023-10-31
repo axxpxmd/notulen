@@ -116,7 +116,7 @@
                                                 <label class="col-md-8 s-12">
                                                     @foreach ($foto_rapats as $i)
                                                         <li class="mb-2">
-                                                            <a target="blank" href="{{ config('app.sftp_src').'foto-rapat/'.$i->foto }}">{{ $i->foto }} <i class="icon-external-link"></i></a>
+                                                            <a target="blank" href="{{ config('app.sftp_src').'foto-rapat/'.$i->foto }}">{{ $i->foto }} <i class="icon-external-link ml-2"></i></a>
                                                         </li>
                                                     @endforeach
                                                 </label>

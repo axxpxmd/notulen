@@ -285,4 +285,11 @@ class NotulenController extends Controller
             'role'
         ));
     }
+
+    public function hapusFoto($id)
+    {
+        FotoRapat::delete($id);
+
+        return redirect()->back()->with('success', 'Foto berhasil dihapus');
+    }
 }
