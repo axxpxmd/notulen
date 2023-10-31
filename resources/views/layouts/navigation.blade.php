@@ -35,6 +35,7 @@
             </a>
         </li>
     @endcan
+    @can('opd')
     <li class="header light"><strong>CONFIG DATA</strong></li>
     <li class="no-b">
         <a href="{{ route('config.opd.index') }}">
@@ -42,6 +43,8 @@
             <span>OPD</span>
         </a>
     </li>
+    @endcan
+    @can('notulen')
     <li class="header light"><strong>MENU</strong></li>
     <li class="no-b">
         <a href="{{ route('notulen') }}">
@@ -49,4 +52,5 @@
             <span>Notulen</span>
         </a>
     </li>
+    @endcan
 </ul>
