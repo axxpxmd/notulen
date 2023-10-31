@@ -25,8 +25,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group m-t-5">
-                                    <label for="n_user" class="col-form-label s-12 col-md-2">Nama</label>
-                                    <input type="text" name="n_user" id="n_user" class="form-control r-0 light s-12 col-md-6" value="{{ $data->nama }}" autocomplete="off" required/>
+                                    <label for="nama" class="col-form-label s-12 col-md-2">Nama</label>
+                                    <input type="text" name="nama" id="nama" class="form-control r-0 light s-12 col-md-6" value="{{ $data->nama }}" autocomplete="off" required/>
+                                </div>
+                                <div class="form-group" style="margin-top: -2px">
+                                    <label for="" class="col-form-label s-12 col-md-2">Foto</label>
+                                    <input type="file" name="foto" id="file" class="input-file" onchange="tampilkanPreview(this,'preview')">
+                                    <label for="file" class="btn-tertiary js-labelFile col-md-6">
+                                        <i class="icon icon-image mr-2 m-b-1"></i>
+                                        <span class="js-fileName">Browse Image</span>
+                                    </label>
                                 </div>
                                 <div class="form-group mt-2">
                                     <div class="col-md-2"></div>
@@ -112,7 +120,6 @@
                 contentType: false,
                 processData: false,
                 success : function(data) {
-                    console.log(data);
                     $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
                     location.reload();
                 },

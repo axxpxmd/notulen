@@ -197,4 +197,47 @@ class PenggunaController extends Controller
             'roles'
         ));
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'username' => 'required|unique:tmusers,username,' . $id,
+            'nama' => 'required',
+            'role_id' => 'required'
+        ]);
+
+        $username = $request->username;
+        $nama = $request->nama;
+        $role_id = $request->role_id;
+        $foto = $request->file('foto');
+
+        //  Save Foto
+        if ($foto) {
+            $ext = $request->file('foto')->extension();
+            if (!in_array($ext, ['png', 'jpeg', 'jpg']))
+                return response()->json([
+                    'message' => 'Format file tidak diperbolehkan'
+                ], 500);
+
+            //TODO: Saved to storage
+            $fileNameFoto = time() . "-" . mt_rand(0, 999) . "." . $ext;
+            $foto->storeAs('foto-user/', $fileNameFoto, 'sftp', 'public');
+        }
+
+        $data = User::find($id);
+        $data->update([
+            'username' => $username,
+            'nama' => $nama,
+            'foto' => $foto ? $fileNameFoto : $data->foto
+        ]);
+
+        $model_has_role = ModelHasRoles::wheremodel_id($id);
+        $model_has_role->update([
+            'role_id' => $role_id
+        ]);
+
+        return response()->json([
+            'message' => 'Data ' . $this->title . ' berhasil diperbaharui.'
+        ]);
+    }
 }
