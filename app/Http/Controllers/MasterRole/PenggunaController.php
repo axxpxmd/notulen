@@ -73,7 +73,7 @@ class PenggunaController extends Controller
                 return "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus Permission'><i class='icon icon-remove'></i></a>";
             })
             ->editColumn('nama', function ($p) {
-                return "<a href='" . route($this->route . 'edit', $p->id) . "' class='text-primary' title='Menampilkan Data'>" . $p->nama . "</a>";
+                return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Menampilkan Data'>" . $p->nama . "</a>";
             })
             ->editColumn('opd', function ($p) {
                 if ($p->opd == null) {
@@ -180,5 +180,19 @@ class PenggunaController extends Controller
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil dihapus.'
         ]);
+    }
+
+    public function show($id)
+    {
+        $route = $this->route;
+        $title = $this->title;
+
+        $data = User::find($id);
+
+        return view($this->view . 'show', compact(
+            'route',
+            'title',
+            'data'
+        ));
     }
 }
