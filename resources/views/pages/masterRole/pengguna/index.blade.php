@@ -56,7 +56,7 @@
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
                                     <button class="btn btn-success btn-sm" onclick="pressOnChange()"><i class="icon-filter mr-2"></i>Filter</button>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -150,6 +150,13 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="row mb-2">
+                                            <label for="foto" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Foto</label>
+                                            <div class="col-sm-9">
+                                                <input type="file" name="foto" id="foto" class="form-control s-12"/>
+                                                <span class="text-danger fs-10">Format : JPG, PNG, JPEG | Max : 2MB</span>
+                                            </div>
+                                        </div>
                                         <div class="row mt-3">
                                             <label class="col-sm-3"></label>
                                             <div class="col-md-9">
@@ -218,7 +225,7 @@
                 }else{
                     $('#id_bidang').html(option);
                 }
-            }, 'JSON'); 
+            }, 'JSON');
         }
     });
 
@@ -241,7 +248,7 @@
                 }else{
                     $('#id_sub_bidang').html(option);
                 }
-            }, 'JSON'); 
+            }, 'JSON');
         }
     });
 
@@ -249,12 +256,12 @@
         $('#role_id').change(function(){
             var role_id = $('#role_id').val();
             if(role_id == 15) {
-                $('#bidang_display').hide(); 
-                $('#sub_bidang_display').hide(); 
+                $('#bidang_display').hide();
+                $('#sub_bidang_display').hide();
             } else {
-                $('#bidang_display').show(); 
-                $('#sub_bidang_display').show(); 
-            } 
+                $('#bidang_display').show();
+                $('#sub_bidang_display').show();
+            }
         });
     });
 
@@ -285,8 +292,8 @@
                 contentType: false,
                 processData: false,
                 success : function(data) {
-                    reset();  
-                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");  
+                    reset();
+                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
                     table.api().ajax.reload();
                 },
                 error : function(data){

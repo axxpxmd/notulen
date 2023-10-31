@@ -82,7 +82,7 @@ class PenggunaController extends Controller
                     return $p->opd->nama;
                 }
             })
-            ->addColumn('role', function($p) {
+            ->addColumn('role', function ($p) {
                 return $p->modelHasRole->role->name;
             })
             ->editColumn('username', function ($p) {
@@ -129,12 +129,26 @@ class PenggunaController extends Controller
         $id_opd = $request->id_opd;
         $id_bidang     = $request->id_bidang;
         $id_sub_bidang = $request->id_sub_bidang;
+        $foto = $request->file('foto');
 
         /**
          * Tahapan
          * 1. tmusers
          * 2. model_has_roles
          */
+
+        //  Save Foto
+        if ($foto) {
+            $ext = $request->file('foto')->extension();
+            if (!in_array($ext, ['png', 'jpeg', 'jpg']))
+                return response()->json([
+                    'message' => 'Format file tidak diperbolehkan'
+                ], 500);
+
+            //TODO: Saved to storage
+            $fileNameFoto = time() . "-" . mt_rand(0, 999) . "." . $ext;
+            $foto->storeAs('foto-user/', $fileNameFoto, 'sftp', 'public');
+        }
 
         //* Tahap 1
         $user = User::create([
@@ -143,7 +157,8 @@ class PenggunaController extends Controller
             'id_sub_bidang' => $id_sub_bidang,
             'username' => $username,
             'password' => Hash::make($password),
-            'nama' => $nama
+            'nama' => $nama,
+            'foto' => $foto ? $fileNameFoto : 'default.png'
         ]);
 
         //* Tahap 2
