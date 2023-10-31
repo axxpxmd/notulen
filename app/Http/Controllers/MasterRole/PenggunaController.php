@@ -188,11 +188,13 @@ class PenggunaController extends Controller
         $title = $this->title;
 
         $data = User::find($id);
+        $roles = Role::all();
 
         return view($this->view . 'show', compact(
             'route',
             'title',
-            'data'
+            'data',
+            'roles'
         ));
     }
 }
