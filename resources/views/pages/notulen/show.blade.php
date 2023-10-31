@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <label class="col-md-2 text-right s-12 font-weight-bold">File Acuan :</label>
                                         <label class="col-md-8 s-12">
-                                            <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-acuan"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button>
+                                            <a target="blank" href="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}">Lihat File <i class="icon-external-link"></i></a>
                                         </label>
                                     </div>
                                     <hr>
@@ -87,18 +87,18 @@
                                                 <label class="col-md-4 text-right s-12 font-weight-bold">Status :</label>
                                                 <label class="col-md-8 s-12">
                                                     @if ($data->status == 1)
-                                                        <span class="badge badge-success">Disetujui</span>
+                                                        <span class="badge font-weight-bold badge-success">Disetujui</span>
                                                     @elseif($data->status == 2)
-                                                        <span class="badge badge-danger">Ditolak</span>
+                                                        <span class="badge font-weight-bold badge-danger">Ditolak</span>
                                                     @elseif($data->status == 0)
-                                                        <span class="badge badge-warning">Belum Ditinjau</span>
+                                                        <span class="badge font-weight-bold badge-warning">Belum Ditinjau</span>
                                                     @endif
                                                 </label>
                                             </div>
                                             <div class="row">
                                                 <label class="col-md-4 text-right s-12 font-weight-bold">File Notulen :</label>
                                                 <label class="col-md-8 s-12">
-                                                    <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file-notulen"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button>
+                                                    <a target="blank" href="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}">Lihat File <i class="icon-external-link"></i></a>
                                                 </label>
                                             </div>
                                         </div>
@@ -115,8 +115,8 @@
                                                 <label class="col-md-2 text-right s-12 font-weight-bold">Foto Rapat :</label>
                                                 <label class="col-md-8 s-12">
                                                     @foreach ($foto_rapats as $i)
-                                                        <li class="mb-1">
-                                                            <a href="{{ config('app.sftp_src').'foto-rapat/'.$i->foto }}">{{ $i->foto }}</a>
+                                                        <li class="mb-2">
+                                                            <a target="blank" href="{{ config('app.sftp_src').'foto-rapat/'.$i->foto }}">{{ $i->foto }} <i class="icon-external-link"></i></a>
                                                         </li>
                                                     @endforeach
                                                 </label>
@@ -125,7 +125,7 @@
                                         <div class="container col-md-6 mt-4">
                                             <div class="row justify-content-center">
                                                 <div class="col-auto p-1">
-                                                    <a href="{{ route('notulen.generateNotulen', $data->id) }}" target="blank" class="btn btn-sm btn-primary mr-1"><i class="icon-document-file-pdf2 mr-2"></i>File Notulen</a>
+                                                    <button class="btn btn-sm btn-primary mr-1 py-1 px-2" data-toggle="modal" data-target="#preview-file"><i class="icon-document-file-pdf2 mr-2"></i>Lihat File</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,18 +172,22 @@
         </div>
     </div>
 </div>
-<!-- Preview File -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="preview-file-notulen" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <iframe src="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}" style="margin-left: -160px !important" width="850px" height="940px"></iframe>
-        </div>
-    </div>
-</div>
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="preview-file-acuan" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <iframe src="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" style="margin-left: -160px !important" width="850px" height="940px"></iframe>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="preview-file" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content py-4 px-3">
+            <div class="text-center">
+                <p class="font-weight-bolder fs-16 text-black">FILE ACUAN</p>
+                <embed src="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" type="" width="100%" height="800px">
+                <hr>
+                <p class="font-weight-bolder fs-16 text-black mt-4">FILE NOTULEN</p>
+                <embed src="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}" type="" width="100%" height="800px">
+                <hr>
+                <p class="font-weight-bolder fs-16 text-black mt-4">FOTO RAPAT</p>
+                @foreach ($foto_rapats as $fr)
+                    <img class="mb-4" src="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" alt="" width="100%">
+                    <br>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
