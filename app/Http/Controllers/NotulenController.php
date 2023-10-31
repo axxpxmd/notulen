@@ -58,8 +58,16 @@ class NotulenController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($p) {
-                return "<a href='" . route('notulen.edit', $p->id) . "' class='text-success mr-2' title='Edit Data'><i class='icon icon-edit'></i></a>
-                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='icon-remove'></i></a>";
+                $edit = "<a href='" . route('notulen.edit', $p->id) . "' class='text-success mr-2' title='Edit Data'><i class='icon icon-edit'></i></a>";
+                $delete = "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='icon-remove'></i></a>";
+
+                if ($p->status == 0) {
+                    return $edit . $delete;
+                } elseif ($p->status == 1) {
+                    return '-';
+                } elseif ($p->status == 2) {
+                    return $delete;
+                }
             })
             ->editColumn('judul_agenda', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Menampilkan Data'>" . $p->judul_agenda . "</a>";
