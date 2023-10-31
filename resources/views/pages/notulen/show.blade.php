@@ -176,17 +176,29 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content py-4 px-3">
             <div class="text-center">
-                <p class="font-weight-bolder fs-16 text-black">FILE ACUAN</p>
-                <embed src="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" type="" width="100%" height="800px">
-                <hr>
-                <p class="font-weight-bolder fs-16 text-black mt-4">FILE NOTULEN</p>
-                <embed src="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}" type="" width="100%" height="800px">
-                <hr>
-                <p class="font-weight-bolder fs-16 text-black mt-4">FOTO RAPAT</p>
-                @foreach ($foto_rapats as $fr)
-                    <img class="mb-4" src="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" alt="" width="100%">
-                    <br>
-                @endforeach
+                <div style="margin-bottom: 40px !important">
+                    <div class="p-2 rounded mb-3" style="background: #E6EAEE">
+                        <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE ACUAN</h6>
+                    </div>
+                    <embed src="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" type="" width="100%" height="800px">
+                    <hr>
+                </div>
+                <div style="margin-bottom: 40px !important">
+                    <div class="p-2 rounded mb-3" style="background: #E6EAEE">
+                        <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE NOTULEN</h6>
+                    </div>
+                    <embed src="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}" type="" width="100%" height="800px">
+                    <hr>
+                </div>
+                <div style="margin-bottom: 40px !important">
+                    <div class="p-2 rounded mb-3" style="background: #E6EAEE">
+                        <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE RAPAT</h6>
+                    </div>
+                    @foreach ($foto_rapats as $fr)
+                        <img class="mb-4" src="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" alt="" width="100%">
+                        <br>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

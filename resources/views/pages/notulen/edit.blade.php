@@ -30,11 +30,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         @include('layouts.alerts')
+                        <div id="alert"></div>
                         <div class="card mt-2">
                             <h6 class="card-header font-weight-bold">Data Notulen</h6>
                             <div class="card-body">
                                 <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
                                     {{ method_field('POST') }}
+                                    <input type="hidden" id="id" name="id" value="{{ $data->id }}"/>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="row mb-2">
@@ -87,9 +89,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row mb-2">
-                                                <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen <span class="text-danger">*</span></label>
+                                                <label for="file_notulen" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Notulen </label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12" required/>
+                                                    <input type="file" name="file_notulen" id="file_notulen" class="form-control s-12"/>
                                                     <span class="text-danger fs-10">Format : PDF, JPG, PNG, JPEG | Max : 2MB</span>
                                                 </div>
                                             </div>
@@ -130,6 +132,12 @@
                                                     @endif
                                                 </div>
                                                 @endforeach
+                                            </div>
+                                            <div class="row mt-2">
+                                                <label class="col-sm-3"></label>
+                                                <div class="col-md-9">
+                                                    <button type="submit" id="action" class="btn btn-block btn-primary btn-sm"><i class="icon-save mr-2"></i>Simpan Data</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -175,6 +183,40 @@
 
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('.tambahan').remove();
+    });
+
+    $('#form').on('submit', function (e) {
+        if ($(this)[0].checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else{
+            $('#alert').html('');
+            url = "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
+            $.ajax({
+                url : url,
+                type : 'POST',
+                data: new FormData(($(this)[0])),
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+                    location.reload();
+                },
+                error : function(data){
+                    err = '';
+                    respon = data.responseJSON;
+                    if(respon.errors){
+                        $.each(respon.errors, function( index, value ) {
+                            err = err + "<li>" + value +"</li>";
+                        });
+                    }
+                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                }
+            });
+            return false;
+        }
+        $(this).addClass('was-validated');
     });
 
 </script>
