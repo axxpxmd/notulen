@@ -18,6 +18,11 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('login2', function () {
+    $year = '2023';
+    return view('loginv2', compact('year'));
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::namespace('Profile')->group(function () {
         Route::resource('profile', 'ProfileController');
@@ -48,7 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     //* Config
-    Route::prefix('config')->name('config.')->group(function() {
+    Route::prefix('config')->name('config.')->group(function () {
         // OPD
         Route::resource('opd', 'OPDController');
 

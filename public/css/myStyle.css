@@ -7,6 +7,13 @@
     animation: AnimationName 90s ease infinite;
 }
 
+.css-selector-2 {
+    background-image: url('https://jdih.tangerangselatankota.go.id/resources/images/Balai-Kota-Tangerang-Selatan-Tangsel-Dok.-Kabartangsel.com_.jpg');
+    background-size: 120%;
+    opacity: 0.8;
+    background-repeat: no-repeat;
+}
+
 @-webkit-keyframes AnimationName {
     0% {
         background-position: 0% 50%

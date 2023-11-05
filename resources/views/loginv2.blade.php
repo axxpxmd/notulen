@@ -21,25 +21,25 @@
 <body class="light">
     <div class="page parallel">
         <div class="d-flex row">
-            <div class="col-md-9 height-full css-selector m-none d-flex align-content-center flex-wrap">
-                <div class="col-md-6">
-                    <div class="text-black p-l-80">
+            <div class="col-md-9 height-full css-selector-2 m-none d-flex align-content-center flex-wrap">
+                <div class="col-md-6" style="color: black !important; opacity: 1 !important;">
+                    <div class="p-l-80">
                         <p id="title" class="fs-50 font-weight-bolder animate__animated animate__backInLeft">SIDIMAS</p>
                         <p class="mt-4 mb-1 fs-25 font-weight-normal">Sistem Disposisi Surat Masuk.</p>
                         <p class="mt-0 fs-25 font-weight-normal">Kota Tangerang Selatan.</p>
                         <hr class="mt-2 bg-black" width="200%">
+                        <div class="absolute text-black">COPYRIGHT © {{ $year }}.</div>
                     </div>
                 </div>
-                <div class="absolute bottom-0 text-black p-l-85 mb-5">COPYRIGHT © {{ $year }}.</div>
             </div>
             <div class="col-md-3 white m-mt-login">
                 <div class="pl-5 pt-5 pr-5 m-t-90 pb-0">
                     <img src="{{ asset('images/template/logo.png') }}" class="mx-auto d-block animate__animated animate__backInDown" width="150" alt=""/>
                 </div>
                 <div class="p-5">
-                    <div class="text-center mb-3 text-black">
-                        <p class="fs-16 m-0 font-weight-bold">SIDIMAS</p>
-                        <p class="fs-16 m-0 font-weight-normal">Sistem Disposisi Surat Masuk</p>
+                    <div class="text-center text-black">
+                        <p class="mb-0 fs-18 font-weight-bolder">SIDIMAS</p>
+                        <P class="mt-0 fs-18">Sistem Disposisi Surat Masuk</P>
                     </div>
                     <form class="needs-validation" novalidate method="POST" action="{{ route('login') }}" autocomplete="off">
                         @csrf

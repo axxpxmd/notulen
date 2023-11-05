@@ -13,6 +13,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notulen;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +25,16 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        return view('home');
+        $totalNotulen = Notulen::count();
+        $notulenDisetujui = Notulen::where('status', 1)->count();
+        $notulenBelumDitinjau = Notulen::where('status', 0)->count();
+        $notulenDitolak = Notulen::where('status', 2)->count();
+
+        return view('home', compact(
+            'totalNotulen',
+            'notulenDisetujui',
+            'notulenBelumDitinjau',
+            'notulenDitolak'
+        ));
     }
 }
