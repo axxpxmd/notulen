@@ -3,7 +3,7 @@
         background: transparent !important;
     }
 </style>
-<figure class="highcharts-figure" style="margin-top: -100px !important">
+<figure class="highcharts-figure" style="margin-top: -90px !important">
     <div id="pieChartChanelBayar"></div>
 </figure>
 @push('scriptDashboard')

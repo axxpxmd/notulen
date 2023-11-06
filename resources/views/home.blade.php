@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="col-md-3 mb-5-m">
-                <div class="card r-15 no-b" style="height: 250px !important">
+                <div class="card r-15 no-b" style="height: 280px !important">
                     <h6 class="card-header bg-success text-white font-weight-bold" style="border-top-right-radius: 15px; border-top-left-radius: 15px">Chart Status Notulen <i class="icon-payment ml-2"></i></h6>
                     <div class="card-body py-0 px-1">
                         @include('chartMetodePembayaran')
