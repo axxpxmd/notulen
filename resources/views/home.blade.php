@@ -14,8 +14,8 @@
             </div>
         </div>
     </header>
-    <div class="container my-3 col-md-12 relative animatedParent animateOnce">
-        <div class="mx-2 row">
+    <div class="container-fluid my-3 col-md-12 relative animatedParent animateOnce">
+        <div class="mx-2 row justify-content-center">
             <div class="col-md-2 px-2 mb-5-m">
                 <div class="card no-b r-15">
                     <h6 class="card-header font-weight-bold text-white bg-success" style="border-top-right-radius: 15px; border-top-left-radius: 15px">Total Notulen</h6>
@@ -60,9 +60,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-5-m">
+            <div class="col-md-3 mb-5-m">
                 <div class="card r-15 no-b" style="height: 250px !important">
-                    <h6 class="card-header bg-success text-white font-weight-bold" style="border-top-right-radius: 15px; border-top-left-radius: 15px">Metode Pembayaran <i class="icon-payment ml-2"></i></h6>
+                    <h6 class="card-header bg-success text-white font-weight-bold" style="border-top-right-radius: 15px; border-top-left-radius: 15px">Chart Status Notulen <i class="icon-payment ml-2"></i></h6>
                     <div class="card-body py-0 px-1">
                         @include('chartMetodePembayaran')
                     </div>
