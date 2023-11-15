@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <label for="id_sub_bidang_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Bidang</label>
+                                <label for="id_sub_bidang_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Sub Bidang</label>
                                 <div class="col-sm-8">
                                     <select id="id_sub_bidang_filter" class="select2 form-control r-0 s-12">
                                         <option value="">Semua</option>
