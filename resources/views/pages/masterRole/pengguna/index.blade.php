@@ -211,7 +211,7 @@
             $('#id_bidang').html(option);
         }else{
             $('#id_bidang').html("<option value=''>Loading...</option>");
-            url = "{{ route('master-role.getBidangByOpd', ':id') }}".replace(':id', val);
+            url = "{{ route('getBidangByOpd', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
@@ -235,7 +235,7 @@
             $('#id_sub_bidang').html(option);
         }else{
             $('#id_sub_bidang').html("<option value=''>Loading...</option>");
-            url = "{{ route('master-role.getSubBidangByBidang', ':id') }}".replace(':id', val);
+            url = "{{ route('getSubBidangByBidang', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){

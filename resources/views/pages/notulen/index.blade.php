@@ -44,6 +44,22 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
+                                <label for="id_bidang_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Bidang</label>
+                                <div class="col-sm-8">
+                                    <select id="id_bidang_filter" class="select2 form-control r-0 s-12">
+                                        <option value="">Semua</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label for="id_sub_bidang_filter" class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Bidang</label>
+                                <div class="col-sm-8">
+                                    <select id="id_sub_bidang_filter" class="select2 form-control r-0 s-12">
+                                        <option value="">Semua</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
                                 <label class="col-form-label s-12 col-md-2 text-right font-weight-bolder">Tanggal Agenda</label>
                                 <div class="col-sm-8">
                                     <div class="row">
@@ -217,6 +233,8 @@
             method: 'GET',
             data: function (data) {
                 data.id_opd_filter = $('#id_opd_filter').val();
+                data.id_bidang_filter = $('#id_bidang_filter').val();
+                data.id_sub_bidang_filter = $('#id_sub_bidang_filter').val();
                 data.tanggal_mulai = $('#tanggal_mulai').val();
                 data.tanggal_akhir = $('#tanggal_akhir').val();
                 data.status_filter = $('#status_filter').val();
@@ -256,6 +274,56 @@
             </div>
             `
         );
+    });
+
+    $(document).ready(function(){
+        $("#id_opd_filter").trigger('change');
+    });
+    $('#id_opd_filter').on('change', function(){
+        val = $(this).val();
+        option = "<option value=''>&nbsp;</option>";
+        if(val == ""){
+            $('#id_bidang_filter').html(option);
+        }else{
+            $('#id_bidang_filter').html("<option value=''>Loading...</option>");
+            url = "{{ route('getBidangByOpd', ':id') }}".replace(':id', val);
+            $.get(url, function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        option += "<option value='" + value.id + "'>" + value.nama +"</li>";
+                    });
+                    $('#id_bidang_filter').empty().html(option);
+                    $('#id_sub_bidang_filter').empty().html(option);
+
+                    $("#id_bidang_filter").val($("#id_bidang_filter option:first").val()).trigger("change.select2");
+                }else{
+                    $('#id_bidang_filter').html(option);
+                }
+            }, 'JSON');
+        }
+    });
+
+    $('#id_bidang_filter').on('change', function(){
+        val = $(this).val();
+        option = "<option value=''>&nbsp;</option>";
+        if(val == ""){
+            $('#id_sub_bidang_filter').html(option);
+        }else{
+            $('#id_sub_bidang_filter').html("<option value=''>Loading...</option>");
+            url = "{{ route('getSubBidangByBidang', ':id') }}".replace(':id', val);
+            $.get(url, function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        option += "<option value='" + value.id + "'>" + value.nama +"</li>";
+                    });
+                    $('#id_sub_bidang_filter').empty().html(option);
+
+                    $("#id_sub_bidang_filter").val($("#id_sub_bidang_filter option:first").val()).trigger("change.select2");
+                }else{
+                    $('#id_sub_bidang_filter').html(option);
+                }
+            }, 'JSON');
+        }
     });
 
     function pressOnChange(){

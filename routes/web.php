@@ -48,8 +48,6 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Pengguna
         Route::resource('pengguna', 'PenggunaController');
-        Route::get('get-bidang-by-opd/{id_opd}', 'PenggunaController@getBidangByOpd')->name('getBidangByOpd');
-        Route::get('get-sub-bidang-by-bidang/{id_bidang}', 'PenggunaController@getSubBidangByBidang')->name('getSubBidangByBidang');
     });
 
     //* Config
@@ -73,4 +71,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('notulen/edit/{id}', 'NotulenController@edit')->name('notulen.edit');
     Route::get('notulen/hapus-foto-rapat/{id}', 'NotulenController@hapusFoto')->name('notulen.hapusFoto');
     Route::post('notulen/update/{id}', 'NotulenController@update')->name('notulen.update');
+
+    //* Helper
+    Route::get('get-bidang-by-opd/{id_opd}', 'HelperController@getBidangByOpd')->name('getBidangByOpd');
+    Route::get('get-sub-bidang-by-bidang/{id_bidang}', 'HelperController@getSubBidangByBidang')->name('getSubBidangByBidang');
 });

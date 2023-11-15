@@ -93,16 +93,6 @@ class PenggunaController extends Controller
             ->toJson();
     }
 
-    public function getBidangByOpd($id_opd)
-    {
-        return Bidang::where('opd_id', $id_opd)->get();
-    }
-
-    public function getSubBidangByBidang($id_bidang)
-    {
-        return Sub_bidang::where('id_bidang', $id_bidang)->get();
-    }
-
     public function store(Request $request)
     {
         $request->validate([

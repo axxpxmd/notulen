@@ -35,11 +35,13 @@ class NotulenController extends Controller
         $tanggal_mulai = $request->tanggal_mulai;
         $tanggal_akhir = $request->tanggal_akhir;
         $status_filter = $request->status_filter;
+        $id_bidang = $request->id_bidang_filter;
+        $id_sub_bidang = $request->id_sub_bidang_filter;
 
         $opds = OPD::getOpd($id_opd, $role);
 
         if ($request->ajax()) {
-            return $this->dataTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter);
+            return $this->dataTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter, $id_bidang, $id_sub_bidang);
         }
 
         return view('pages.notulen.index', compact(
@@ -52,9 +54,9 @@ class NotulenController extends Controller
         ));
     }
 
-    public function dataTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter)
+    public function dataTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter, $id_bidang, $id_sub_bidang)
     {
-        $data = Notulen::queryTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter);
+        $data = Notulen::queryTable($id_opd, $tanggal_mulai, $tanggal_akhir, $status_filter, $id_bidang, $id_sub_bidang);
 
         return DataTables::of($data)
             ->addColumn('action', function ($p) {
