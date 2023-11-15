@@ -197,7 +197,7 @@
                 </div>
                 <div style="margin-bottom: 40px !important">
                     <div class="p-2 rounded mb-3" style="background: #E6EAEE">
-                        <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE RAPAT</h6>
+                        <h6 class="text-center fs-14 font-weight-bold text-black m-1">FOTO RAPAT</h6>
                     </div>
                     @foreach ($foto_rapats as $fr)
                         <img class="mb-4" src="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" alt="" width="100%">
