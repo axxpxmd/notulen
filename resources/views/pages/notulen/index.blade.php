@@ -178,7 +178,7 @@
                                                 <div class="row mb-2">
                                                     <label for="peserta" class="col-form-label s-12 col-sm-3 text-right font-weight-bold">Peserta <span class="text-danger">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama peserta" class="form-control s-12">
+                                                        <input type="text" name="peserta[]" id="peserta" placeholder="Masukan nama peserta" class="form-control s-12" required>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <a href="#"><i class="icon icon-plus text-success" id="add-pengajuan"></i></a>
