@@ -182,10 +182,9 @@
                     </div>
                     <object data="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" type="" width="100%" height="800px" type="application/pdf">
                         <p>Browser web Anda tidak memiliki plugin PDF. <br>
-                            <a href="filename.pdf">klik disini untuk mendownload file.</a>
+                            <a href="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}">klik disini untuk mendownload file.</a>
                         </p>
                     </object>
-                    {{-- <embed src="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}" type="" width="100%" height="800px"> --}}
                     <hr>
                 </div>
                 <div style="margin-bottom: 40px !important">
@@ -200,7 +199,11 @@
                         <h6 class="text-center fs-14 font-weight-bold text-black m-1">FOTO RAPAT</h6>
                     </div>
                     @foreach ($foto_rapats as $fr)
-                        <img class="mb-4" src="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" alt="" width="100%">
+                        <object data="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}" type="" width="100%" height="800px" type="application/pdf">
+                            <p>Browser web Anda tidak memiliki plugin PDF. <br>
+                                <a href="{{ config('app.sftp_src').'foto-rapat/'.$fr->foto }}">klik disini untuk mendownload file.</a>
+                            </p>
+                        </object>
                         <br>
                     @endforeach
                 </div>
