@@ -172,7 +172,7 @@ class NotulenController extends Controller
             'waktu' => $waktu,
             'tempat' => $tempat,
             'acuan' => $acuan,
-            'file_acuan' => $fileNameAcuan,
+            'file_acuan' => $file_acuan ? $fileNameAcuan : '',
             'keterangan' => $keterangan,
             'file_notulen' => $fileNameNotulan,
             'status' => 0
@@ -187,11 +187,13 @@ class NotulenController extends Controller
         }
 
         //* Save Foto Rapat
-        foreach ($fileNameFotoRapat as $key => $fr) {
-            FotoRapat::create([
-                'id_notulen' => $notulen->id,
-                'foto' => $fileNameFotoRapat[$key]
-            ]);
+        if ($foto_rapat) {
+            foreach ($fileNameFotoRapat as $key => $fr) {
+                FotoRapat::create([
+                    'id_notulen' => $notulen->id,
+                    'foto' => $fileNameFotoRapat[$key]
+                ]);
+            }
         }
 
         return response()->json([

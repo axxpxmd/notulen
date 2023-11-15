@@ -55,7 +55,11 @@
                                     <div class="row">
                                         <label class="col-md-2 text-right s-12 font-weight-bold">File Acuan :</label>
                                         <label class="col-md-8 s-12">
+                                            @if ($data->file_acuan)
                                             <a target="blank" href="{{ config('app.sftp_src').'file-acuan/'.$data->file_acuan }}">Lihat File <i class="icon-external-link"></i></a>
+                                            @else
+                                            <span>-</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <hr>
@@ -114,11 +118,13 @@
                                             <div class="row">
                                                 <label class="col-md-2 text-right s-12 font-weight-bold">Foto Rapat :</label>
                                                 <label class="col-md-8 s-12">
-                                                    @foreach ($foto_rapats as $i)
+                                                    @forelse ($foto_rapats as $i)
                                                         <li class="mb-2">
                                                             <a target="blank" href="{{ config('app.sftp_src').'foto-rapat/'.$i->foto }}">{{ $i->foto }} <i class="icon-external-link ml-2"></i></a>
                                                         </li>
-                                                    @endforeach
+                                                    @empty
+                                                        <span>-</span>
+                                                    @endforelse
                                                 </label>
                                             </div>
                                         </div>
@@ -176,6 +182,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content py-4 px-3">
             <div class="text-center">
+                @if ($data->file_acuan)
                 <div style="margin-bottom: 40px !important">
                     <div class="p-2 rounded mb-3" style="background: #E6EAEE">
                         <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE ACUAN</h6>
@@ -187,6 +194,7 @@
                     </object>
                     <hr>
                 </div>
+                @endif
                 <div style="margin-bottom: 40px !important">
                     <div class="p-2 rounded mb-3" style="background: #E6EAEE">
                         <h6 class="text-center fs-14 font-weight-bold text-black m-1">FILE NOTULEN</h6>
@@ -194,6 +202,7 @@
                     <embed src="{{ config('app.sftp_src').'file-notulen/'.$data->file_notulen }}" type="" width="100%" height="800px">
                     <hr>
                 </div>
+                @if ($foto_rapats->count() != 0)
                 <div style="margin-bottom: 40px !important">
                     <div class="p-2 rounded mb-3" style="background: #E6EAEE">
                         <h6 class="text-center fs-14 font-weight-bold text-black m-1">FOTO RAPAT</h6>
@@ -207,6 +216,7 @@
                         <br>
                     @endforeach
                 </div>
+                @endif
             </div>
             <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"><i class="icon-times mr-2"></i>Tutup</button>
         </div>
